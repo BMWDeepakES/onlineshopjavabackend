@@ -2,8 +2,8 @@ pipeline{
     agent any
 
     tools {
-            maven 'Maven'   // this must match the name in Global Tool Configuration
-            jdk 'JDK 17'    // if using Java 17
+            Maven 'maven'
+            jdk 'jdk17'
         }
 
     stages {
