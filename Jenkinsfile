@@ -23,7 +23,7 @@ pipeline{
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
-                sh 'cp target/*.war /opt/tomcat9/webapps/'
+               sh 'cp target/*.war /opt/tomcat9/webapps/'
             }
         }
     }
