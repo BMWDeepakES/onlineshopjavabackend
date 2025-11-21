@@ -22,7 +22,7 @@ pipeline{
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
-                sh 'mvn deploy'
+                sh 'sudo cp target/*.war /opt/tomcat9/webapps/'
             }
         }
     }
