@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: ADMIN-PORTAL
+    name: javabackend
   datasource:
     url: jdbc:postgresql://localhost:5432/onlineshop
     username: postgres
