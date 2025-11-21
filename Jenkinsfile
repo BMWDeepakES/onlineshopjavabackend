@@ -4,6 +4,7 @@ pipeline{
     tools {
             maven 'maven'
             jdk 'jdk17'
+
         }
 
     stages {
@@ -22,7 +23,7 @@ pipeline{
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
-                sh 'sudo cp target/*.war /opt/tomcat9/webapps/'
+                sh 'cp target/*.war /opt/tomcat9/webapps/'
             }
         }
     }
