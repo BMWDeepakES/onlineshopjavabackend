@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres-db_docker
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: EdeepeepE12345
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  springboot:
+    image: javabackend_image
+    build: .
+    container_name: javabackend_docker
+    ports:
+      - "9090:9090"
+    depends_on:
+      - postgres
+#    volumes:
+#      - .:/app/ecommeradmin-0.0.1-SNAPSHOT.jar
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: EdeepeepE12345
+      SERVER_SERVLET_CONTEXT_PATH: /javabackend
+      APPLICATION_NAME: javabackend
+
+volumes:
+  postgres:
