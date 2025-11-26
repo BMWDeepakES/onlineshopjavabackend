@@ -11,7 +11,7 @@
 	<groupId>com.ecomadmin</groupId>
 	<artifactId>ecommeradmin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+<!--	<packaging>war</packaging>-->
 	<name>ecommeradmin</name>
 	<description>ecommerce admin portal</description>
 	<url/>
