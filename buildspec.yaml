@@ -6,7 +6,7 @@ phases:
           - mvn clean install
           - echo Logging in to Amazon ECR...
           - aws --version
-          - RESPOSITORY_URI=866087136701.dkr.ecr.ap-southeast-2.amazonaws.com/ecommerce-registry
+          - REPOSITORY_URI=866087136701.dkr.ecr.ap-southeast-2.amazonaws.com/ecommerce-registry
           - aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin $REPOSITORY_URI
           - commit_hash=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
           - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID aws -F":" '{print $2}')

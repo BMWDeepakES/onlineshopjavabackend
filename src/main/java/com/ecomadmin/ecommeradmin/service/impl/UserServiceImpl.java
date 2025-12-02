@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -24,6 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Users> getAllUsersList() {
         List<Users> uers=new ArrayList<>();
+
         uers.addAll(userRepository.findAll());
         return uers;
     }
