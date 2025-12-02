@@ -3,51 +3,51 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo "Running Maven build..."
-      - mvn clean install
+     - echo "Running Maven build..."
+     - mvn clean install
 
-      - echo Logging in to Amazon ECR...
-      - aws --version
+     - echo Logging in to Amazon ECR...
+     - aws --version
 
       # Export repo URI
-      - export REPOSITORY_URI=866087136701.dkr.ecr.ap-southeast-2.amazonaws.com/ecommerce-registry
+     - export REPOSITORY_URI=866087136701.dkr.ecr.ap-southeast-2.amazonaws.com/ecommerce-registry
 
       # Login
-      - aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin $REPOSITORY_URI
+     - aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin $REPOSITORY_URI
 
       # Generate image tag (correct awk syntax)
-      - export IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+     - export IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
 
-      - echo "Using image tag $IMAGE_TAG"
+     - echo "Using image tag $IMAGE_TAG"
 
   build:
     commands:
-      - echo Build started on `date`
-      - echo Building the Docker image...
+     - echo Build started on `date`
+     - echo Building the Docker image...
 
-      - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+     - docker build -t $REPOSITORY_URI:latest .
+     - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
 
   post_build:
     commands:
-      - echo Build completed on `date`
-      - echo Pushing Docker images...
+     - echo Build completed on `date`
+     - echo Pushing Docker images...
 
-      - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+     - docker push $REPOSITORY_URI:latest
+     - docker push $REPOSITORY_URI:$IMAGE_TAG
 
-      - echo Writing image definitions file...
+     - echo Writing image definitions file...
 
       # Set ECS container name
-      - export DOCKER_CONTAINER_NAME=ecommerce-registry
+     - export DOCKER_CONTAINER_NAME=ecommerce-registry
 
       # Write imagedefinitions.json only once
-      - printf '[{"name":"%s","imageUri":"%s"}]' "$DOCKER_CONTAINER_NAME" "$REPOSITORY_URI:$IMAGE_TAG" > imagedefinitions.json
+     - printf '[{"name":"%s","imageUri":"%s"}]' "$DOCKER_CONTAINER_NAME" "$REPOSITORY_URI:$IMAGE_TAG" > imagedefinitions.json
 
-      - echo Contents of imagedefinitions.json:
-      - cat imagedefinitions.json
+     - echo Contents of imagedefinitions.json:
+     - cat imagedefinitions.json
 
 artifacts:
   files:
-    - imagedefinitions.json
-    - targets/*.jar
+     - imagedefinitions.json
+     - targets/*.jar
